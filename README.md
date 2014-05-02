@@ -13,6 +13,7 @@ Hackathon starter for Rails developer. Inspired by [hackathon-starter](https://g
 	$ cd hackathon-starter-rails
 	$ mv config/webapi.yml.default config/webapi.yml
 	# Edit webapi.yml
+  $ mv config/database.yml.default config/database.yml
 	$ bundle install
 	$ rails s
 

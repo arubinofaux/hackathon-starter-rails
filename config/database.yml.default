@@ -1,0 +1,27 @@
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: hs_development
+  pool: 5
+  username: root
+  password: 
+  host: localhost
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: hs_test
+  pool: 5
+  username: root
+  password: 
+  host: localhost
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: hs_production
+  pool: 5
+  username: root
+  password: 
+  host: localhost
