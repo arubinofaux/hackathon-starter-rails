@@ -13,9 +13,7 @@ gem 'mysql2'
 # Users
 gem 'devise'
 gem 'omniauth'
-gem 'omniauth-twitter'
 gem 'omniauth-facebook'
-gem 'omniauth-github'
 
 # html emails
 gem 'roadie'
