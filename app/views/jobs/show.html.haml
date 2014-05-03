@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @job.user_id
+%p
+  %b Title:
+  = @job.title
+%p
+  %b Company:
+  = @job.company
+%p
+  %b Company url:
+  = @job.company_url
+%p
+  %b Description:
+  = @job.description
+%p
+  %b Location:
+  = @job.location
+
+= link_to 'Edit', edit_job_path(@job)
+\|
+= link_to 'Back', jobs_path
