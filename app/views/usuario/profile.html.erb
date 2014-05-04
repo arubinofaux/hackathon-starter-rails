@@ -62,9 +62,9 @@
             <% else %>
               <a href="https://github.com/<%= current_user.github_username %>" class="list-group-item"><i class="profile-list-icon fa fa-github"></i> @<%= current_user.github_username %></a>
             <% end %>            
-						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-twitter" style="color: #4ab6d5"></i> @dsteiner</a>
-						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-facebook-square" style="color: #1a7ab9"></i> Denise Steiner</a>
-						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-envelope" style="color: #888"></i> dsteiner@example.com</a>
+						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-twitter" style="color: #4ab6d5"></i> @<%= current_user.name %></a>
+						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-facebook-square" style="color: #1a7ab9"></i> <%= current_user.name %></a>
+						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-envelope" style="color: #888"></i> <%= current_user.name %></a>
 					</div>
 				</div>
 
@@ -77,7 +77,7 @@
 
 					<ul id="profile-tabs" class="nav nav-tabs">
 						<li class="active">
-							<a href="#profile-tabs-board" data-toggle="tab">Board</a>
+							<a href="#profile-tabs-map" data-toggle="tab">Map</a>
 						</li>
 						<li>
 							<a href="#profile-tabs-activity" data-toggle="tab">Timeline</a>
@@ -91,206 +91,73 @@
 					</ul>
 
 					<div class="tab-content tab-content-bordered panel-padding">
-						<div class="widget-article-comments tab-pane panel no-padding no-border fade in active" id="profile-tabs-board">
+						<div class="widget-article-comments tab-pane panel no-padding no-border fade in active" id="profile-tabs-map">
+              <script type="text/javascript">
+			$(document).ready( function() {
 
-							<div class="comment">
-								<img src="assets/demo/avatars/1.jpg" alt="" class="comment-avatar">
-								<div class="comment-body">
-									<form action="" id="leave-comment-form" class="comment-text no-padding no-border">
-										<textarea class="form-control" rows="1"></textarea>
-										<div class="expanding-input-hidden" style="margin-top: 10px;">
-											<label class="checkbox-inline pull-left">
-												<input type="checkbox" class="px">
-												<span class="lbl">Private message</span>
-											</label>
-											<button class="btn btn-primary pull-right">Leave Message</button>
-										</div>
-									</form>
-								</div> <!-- / .comment-body -->
-							</div>
+				var handler = Gmaps.build('Google');
+				handler.buildMap({ 
+					internal: { id: 'multi_markers' }, 
+					provider: {
+			      zoom:      11,
+			      //center:    new google.maps.LatLng(53.385873, -1.471471),
+			      //mapTypeId: google.maps.MapTypeId.ROADMAP,
+			      styles:    [	{		featureType:'water',		stylers:[{color:'#46bcec'},{visibility:'on'}]	},{		featureType:'landscape',		stylers:[{color:'#f2f2f2'}]	},{		featureType:'road',		stylers:[{saturation:-100},{lightness:45}]	},{		featureType:'road.highway',		stylers:[{visibility:'simplified'}]	},{		featureType:'road.arterial',		elementType:'labels.icon',		stylers:[{visibility:'off'}]	},{		featureType:'administrative',		elementType:'labels.text.fill',		stylers:[{color:'#444444'}]	},{		featureType:'transit',		stylers:[{visibility:'off'}]	},{		featureType:'poi',		stylers:[{visibility:'off'}]	}]
+			    }
+				}, function(){
+				  var markers = handler.addMarkers([
+				    <% @close_users.each do |dd| %>
+            <% dd['latitude'] = dd['latitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['latitude'] = dd['latitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            { 
+              picture: {
+                url: '/assets/male-2.png',
+                width: 36,
+                height: 36
+              },
+              lat: <%= dd['latitude'] %>, 
+              lng: <%= dd['longitude'] %>, 
+              infowindow: '<%= link_to user_pubprofile_path(dd['id']) do %><img style="width:32px;height:32px;" src ="<%= dd['avatar']%>" /> <%= dd['name'] %><% end %>'
+            },
+            <% end %>
+            <% @close_events.each do |dd| %>
+		          { 
+                picture: {
+                  url: '/assets/amphitheater.png',
+                  width: 36,
+                  height: 36
+                },
+                lat: <%= dd['latitude'] %>, 
+                lng: <%= dd['longitude'] %>,
+                infowindow: '<%= link_to events_maps_path do %><%= dd['title'] %><% end %>'
+              },
+		        <% end %>
+		        <% @close_jobs.each do |dd| %>
+		        <% dd['latitude'] = dd['latitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['latitude'] = dd['latitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>  
+            { 
+              picture: {
+                url: '/assets/administration.png',
+                width: 36,
+                height: 36
+              },
+              lat: <%= dd['latitude'] %>, 
+              lng: <%= dd['longitude'] %>,
+              infowindow: '<%= link_to jobs_maps_path do %><%= dd['title'] %><% end %>'
+            },
+		        <% end %>
+				  ]);
+				  handler.bounds.extendWith(markers);
+				  handler.fitMapToBounds();
+				});
 
-							<hr class="no-panel-padding-h panel-wide">
-
-							<div class="comment">
-								<img src="assets/demo/avatars/2.jpg" alt="" class="comment-avatar">
-								<div class="comment-body">
-									<div class="comment-text">
-										<div class="comment-heading">
-											<a href="#" title="">Robert Jang</a><span>14 hours ago</span>
-										</div>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-									</div>
-									<div class="comment-footer">
-										<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-										<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-										&nbsp;&nbsp;·&nbsp;&nbsp;
-										<a href="#">Reply</a>
-									</div>
-								</div> <!-- / .comment-body -->
-
-								<div class="comment">
-									<img src="assets/demo/avatars/4.jpg" alt="" class="comment-avatar">
-									<div class="comment-body">
-										<div class="comment-text">
-											<div class="comment-heading">
-												<a href="#" title="">Timothy Owens</a><span>14 hours ago</span>
-											</div>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-										</div>
-										<div class="comment-footer">
-											<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-											<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-											&nbsp;&nbsp;·&nbsp;&nbsp;
-											<a href="#">Reply</a>
-										</div>
-									</div> <!-- / .comment-body -->
-								</div> <!-- / .comment -->
-
-								<div class="comment">
-									<img src="assets/demo/avatars/5.jpg" alt="" class="comment-avatar">
-									<div class="comment-body">
-										<div class="comment-text">
-											<div class="comment-heading">
-												<a href="#" title="">Denise Steiner</a><span>14 hours ago</span>
-											</div>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-										</div>
-										<div class="comment-footer">
-											<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-											<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-											&nbsp;&nbsp;·&nbsp;&nbsp;
-											<a href="#">Reply</a>
-										</div>
-									</div> <!-- / .comment-body -->
-
-									<div class="comment">
-										<img src="assets/demo/avatars/1.jpg" alt="" class="comment-avatar">
-										<div class="comment-body">
-											<div class="comment-text">
-												<div class="comment-heading">
-													<a href="#" title="">John Doe</a><span>14 hours ago</span>
-												</div>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-											</div>
-											<div class="comment-footer">
-												<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-												<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-												&nbsp;&nbsp;·&nbsp;&nbsp;
-												<a href="#">Reply</a>
-											</div>
-										</div> <!-- / .comment-body -->
-									</div> <!-- / .comment -->
-								</div> <!-- / .comment -->
-							</div> <!-- / .comment -->
-
-							<div class="comment">
-								<img src="assets/demo/avatars/3.jpg" alt="" class="comment-avatar">
-								<div class="comment-body">
-									<div class="comment-text">
-										<div class="comment-heading">
-											<a href="#" title="">Michelle Bortz</a><span>14 hours ago</span>
-										</div>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-									</div>
-									<div class="comment-footer">
-										<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-										<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-										&nbsp;&nbsp;·&nbsp;&nbsp;
-										<a href="#">Reply</a>
-									</div>
-								</div> <!-- / .comment-body -->
-							</div> <!-- / .comment -->
-
-							<div class="comment">
-								<img src="assets/demo/avatars/2.jpg" alt="" class="comment-avatar">
-								<div class="comment-body">
-									<div class="comment-text">
-										<div class="comment-heading">
-											<a href="#" title="">Robert Jang</a><span>14 hours ago</span>
-										</div>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-									</div>
-									<div class="comment-footer">
-										<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-										<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-										&nbsp;&nbsp;·&nbsp;&nbsp;
-										<a href="#">Reply</a>
-									</div>
-								</div> <!-- / .comment-body -->
-
-								<div class="comment">
-									<img src="assets/demo/avatars/4.jpg" alt="" class="comment-avatar">
-									<div class="comment-body">
-										<div class="comment-text">
-											<div class="comment-heading">
-												<a href="#" title="">Timothy Owens</a><span>14 hours ago</span>
-											</div>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-										</div>
-										<div class="comment-footer">
-											<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-											<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-											&nbsp;&nbsp;·&nbsp;&nbsp;
-											<a href="#">Reply</a>
-										</div>
-									</div> <!-- / .comment-body -->
-								</div> <!-- / .comment -->
-
-								<div class="comment">
-									<img src="assets/demo/avatars/5.jpg" alt="" class="comment-avatar">
-									<div class="comment-body">
-										<div class="comment-text">
-											<div class="comment-heading">
-												<a href="#" title="">Denise Steiner</a><span>14 hours ago</span>
-											</div>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-										</div>
-										<div class="comment-footer">
-											<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-											<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-											&nbsp;&nbsp;·&nbsp;&nbsp;
-											<a href="#">Reply</a>
-										</div>
-									</div> <!-- / .comment-body -->
-
-									<div class="comment">
-										<img src="assets/demo/avatars/1.jpg" alt="" class="comment-avatar">
-										<div class="comment-body">
-											<div class="comment-text">
-												<div class="comment-heading">
-													<a href="#" title="">John Doe</a><span>14 hours ago</span>
-												</div>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-											</div>
-											<div class="comment-footer">
-												<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-												<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-												&nbsp;&nbsp;·&nbsp;&nbsp;
-												<a href="#">Reply</a>
-											</div>
-										</div> <!-- / .comment-body -->
-									</div> <!-- / .comment -->
-								</div> <!-- / .comment -->
-							</div> <!-- / .comment -->
-
-							<div class="comment">
-								<img src="assets/demo/avatars/3.jpg" alt="" class="comment-avatar">
-								<div class="comment-body">
-									<div class="comment-text">
-										<div class="comment-heading">
-											<a href="#" title="">Michelle Bortz</a><span>14 hours ago</span>
-										</div>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
-									</div>
-									<div class="comment-footer">
-										<a href="#"><i class="fa fa-thumbs-o-up"></i></a>&nbsp;&nbsp;
-										<a href="#"><i class="fa fa-thumbs-o-down"></i></a>
-										&nbsp;&nbsp;·&nbsp;&nbsp;
-										<a href="#">Reply</a>
-									</div>
-								</div> <!-- / .comment-body -->
-							</div> <!-- / .comment -->
-
+			});
+		</script>  
+              <div id="multi_markers" style='width: 100%; height: 400px;'></div>
 						</div> <!-- / .tab-pane -->
 						<div class="tab-pane fade" id="profile-tabs-activity">
 							<div class="timeline">

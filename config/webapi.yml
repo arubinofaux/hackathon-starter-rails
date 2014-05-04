@@ -1,0 +1,8 @@
+development:
+  facebook:
+    key: 1599801300244495
+    secret: 40ae9c8d1a7f807874236e43c5767c36 
+production:
+  facebook:
+    key: 1599801300244495
+    secret: 40ae9c8d1a7f807874236e43c5767c36
