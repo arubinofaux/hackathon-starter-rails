@@ -1,0 +1,119 @@
+		<script type="text/javascript">
+			$(document).ready( function() {
+
+				
+
+				var handler = Gmaps.build('Google');
+				handler.buildMap({ 
+					internal: { id: 'multi_markers' }, 
+					provider: {
+			      zoom:      11,
+			      //center:    new google.maps.LatLng(53.385873, -1.471471),
+			      //mapTypeId: google.maps.MapTypeId.ROADMAP,
+			      styles:    [	{		featureType:'water',		stylers:[{color:'#46bcec'},{visibility:'on'}]	},{		featureType:'landscape',		stylers:[{color:'#f2f2f2'}]	},{		featureType:'road',		stylers:[{saturation:-100},{lightness:45}]	},{		featureType:'road.highway',		stylers:[{visibility:'simplified'}]	},{		featureType:'road.arterial',		elementType:'labels.icon',		stylers:[{visibility:'off'}]	},{		featureType:'administrative',		elementType:'labels.text.fill',		stylers:[{color:'#444444'}]	},{		featureType:'transit',		stylers:[{visibility:'off'}]	},{		featureType:'poi',		stylers:[{visibility:'off'}]	}]
+			    }
+				}, function(){
+				  var markers = handler.addMarkers([
+				    <% @on_board.each do |dd| %>
+		        <% dd['latitude'] = dd['latitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['latitude'] = dd['latitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] + ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>
+            <% dd['longitude'] = dd['longitude'] - ( rand * ( 0.1 - 0.0001 ) + 0.0001 ) %>  
+            { 
+              picture: {
+                url: '/assets/administration.png',
+                width: 36,
+                height: 36
+              },
+              lat: <%= dd['latitude'] %>, 
+              lng: <%= dd['longitude'] %>,
+              infowindow: '<%= link_to jobs_maps_path do %><%= dd['title'] %><% end %>'
+            },
+		        <% end %>
+				  ]);
+				  handler.bounds.extendWith(markers);
+				  handler.fitMapToBounds();
+				});
+
+			});
+		</script>
+  
+  <div class="page-header">
+    <div class="row">
+		  <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="glyphicon glyphicon-user page-header-icon"></i>&nbsp;&nbsp;Find Positions</h1>
+	  </div>
+  </div>
+	
+  <div class="row">
+			<div class="col-sm-12">
+  			<div id="multi_markers" style='width: 100%; height: 400px;'></div>
+  		</div>
+		</div>
+
+		
+		
+
+		<div class="panel search-panel">
+
+			<!-- Search form -->
+			<form action="" class="search-form bg-primary">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon no-background"><i class="fa fa-search"></i></span>
+					<input type="text" name="s" class="form-control" placeholder="Type your search here...">
+					<span class="input-group-btn">
+						<button class="btn" type="submit">Search</button>
+					</span>
+				</div> <!-- / .input-group -->
+			</form>
+			<!-- / Search form -->
+
+      <h3 style="padding:0 20px;"><%= @jobs_count %> jobs found</h3>
+        <!-- Search results -->
+			<div class="panel-body tab-content">
+
+
+				<!-- Users search -->
+				<div class="search-users tab-pane active" id="search-tabs-users">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="text-center">#</th>
+								<th>Company</th>
+								<th>Position</th>
+								<th>Location</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @jobs.each do |job| %>
+              <tr>
+								<td class="text-center"><%= job.id %></td>
+								<td>
+									<a href="#"><%= job.company %></a>
+								</td>
+                <td><a href="#"><%= job.title %></a></td>
+								<td><%= job.location %></td>
+							</tr>
+              <% end %>
+						</tbody>
+					</table>
+				</div>
+				<!-- / Users search -->
+
+			</div>
+			<!-- / Search results -->
+
+			<!-- Panel Footer -->
+			<div class="panel-footer">
+				<ul class="pagination">
+					<li class="disabled"><a href="#">«</a></li>
+					<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">»</a></li>
+				</ul>
+			</div> <!-- / .panel-footer -->
+
+		</div>

@@ -1,47 +1,40 @@
-    <% if !current_user.github_username %>
-    <!-- Note: Create a helper later on that can autogenerate these alerts... -->
-    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      Your Github account hasn't been connected. Connect your Github to get more exposure for your profile. Don't have a github? Sign up <a href="https://github.com">here</a> today for free!
-    </div>
-    <% end %>
    	<div class="profile-full-name">
-			<span class="text-semibold"><%= current_user.name %></span>'s profile
+			<span class="text-semibold"><%= @user.name %></span>'s profile
 		</div>
 
 		<div class="profile-row">
 			<div class="left-col">
 				<div class="profile-block">
 					<div class="panel profile-photo">
-						<img src="<%= current_user.avatar %>?type=large" alt="">
+						<img src="<%= @user.avatar %>" alt="">
 					</div><br>
-					<!--<a href="#" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Following</a>&nbsp;&nbsp;
-					<a href="#" class="btn"><i class="fa fa-comment"></i></a>-->
+					<a href="#" class="btn btn-primary">Follow</a>&nbsp;&nbsp;
+					<a href="#" class="btn"><i class="fa fa-comment"></i></a>
 				</div>
 				
 				<div class="panel panel-transparent">
 					<div class="panel-heading">
-            <span class="panel-title"><strong>About me</strong></span>
+						<span class="panel-title">About me</span>
 					</div>
 					<div class="panel-body">
-            <%= !current_user.bio ? 'You do not have a bio. Enter some information about yourself here.' : current_user.bio %>
+            <%= !@user.bio ? 'This user hasn\'t entered a bio yet.' : @user.bio %>
 					</div>
 				</div>
 
 				<div class="panel panel-transparent">
 					<div class="panel-heading">
-            <span class="panel-title"><strong>Statistics</strong></span>
+						<span class="panel-title">Statistics</span>
 					</div>
 					<div class="list-group">
-            <a href="#" class="list-group-item"><strong><%= !current_user.public_repos ? 0 : current_user.public_repos %></strong> Repos</a>
-            <a href="#" class="list-group-item"><strong><%= !current_user.followers ? 0 : current_user.followers %></strong> Followers</a>
-            <a href="#" class="list-group-item"><strong><%= !current_user.following ? 0 : current_user.following %></strong> Following</a>
+            <a href="#" class="list-group-item"><strong><%= !@user.public_repos ? 0 : @user.public_repos %></strong> Repos</a>
+            <a href="#" class="list-group-item"><strong><%= !@user.followers ? 0 : @user.followers %></strong> Followers</a>
+            <a href="#" class="list-group-item"><strong><%= !@user.following ? 0 : @user.following %></strong> Following</a>
 					</div>
 				</div>
 
 				<div class="panel panel-transparent profile-skills">
 					<div class="panel-heading">
-            <span class="panel-title"><strong>Skills</strong></span>
+						<span class="panel-title">Skills</span>
 					</div>
 					<div class="panel-body">
 						<span class="label label-primary">UI/UX</span>
@@ -54,14 +47,9 @@
 
 				<div class="panel panel-transparent">
 					<div class="panel-heading">
-            <span class="panel-title"><strong>Social</strong></span>
+						<span class="panel-title">Social</span>
 					</div>
 					<div class="list-group">
-            <% if !current_user.github_username %>
-            <a href="#" class="list-group-item"><i class="profile-list-icon fa fa-github"></i> <strong>Connect Github</strong></a>
-            <% else %>
-              <a href="https://github.com/<%= current_user.github_username %>" class="list-group-item"><i class="profile-list-icon fa fa-github"></i> @<%= current_user.github_username %></a>
-            <% end %>            
 						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-twitter" style="color: #4ab6d5"></i> @dsteiner</a>
 						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-facebook-square" style="color: #1a7ab9"></i> Denise Steiner</a>
 						<a href="#" class="list-group-item"><i class="profile-list-icon fa fa-envelope" style="color: #888"></i> dsteiner@example.com</a>

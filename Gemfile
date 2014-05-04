@@ -21,6 +21,13 @@ gem 'roadie'
 gem 'haml'
 gem 'haml-rails'
 
+gem "httparty"
+
+# location
+gem 'underscore-rails'
+gem 'gmaps4rails'
+gem 'geocoder'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

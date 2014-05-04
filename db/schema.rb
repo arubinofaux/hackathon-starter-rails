@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503195413) do
+ActiveRecord::Schema.define(version: 20140504093321) do
+
+  create_table "events", force: true do |t|
+    t.integer  "user_id"
+    t.string   "organizer"
+    t.string   "title"
+    t.string   "event_type"
+    t.string   "date"
+    t.string   "location"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image"
+    t.float    "longitude"
+    t.float    "latitude"
+  end
 
   create_table "jobs", force: true do |t|
     t.integer  "user_id"
@@ -22,6 +37,8 @@ ActiveRecord::Schema.define(version: 20140503195413) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "users", force: true do |t|
@@ -42,6 +59,14 @@ ActiveRecord::Schema.define(version: 20140503195413) do
     t.string   "name"
     t.string   "avatar"
     t.string   "github_username"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "public_repos"
+    t.string   "public_gists"
+    t.string   "followers"
+    t.string   "following"
+    t.string   "company"
+    t.text     "bio"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

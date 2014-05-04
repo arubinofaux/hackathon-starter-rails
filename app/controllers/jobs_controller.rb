@@ -1,17 +1,36 @@
 class JobsController < ApplicationController
+  layout :jobs_layout
   before_action :set_job, only: [:show, :edit, :update, :destroy]
-
+ 
+  def jobs_layout
+    if user_signed_in? 
+      return "user_backend"
+    end
+  end
+  
   # GET /jobs
   # GET /jobs.json
   def index
     @jobs = Job.all
   end
+  
+  # GET /jobs/list
+  # GET /jobs.json
+  def list
+    @jobs = Job.all
+  end
 
+  def map
+    @on_board = Job.all
+    @jobs_count = Job.count
+  	@jobs = Job.find(:all, :order => "id", :limit => 25)
+  end
+  
   # GET /jobs/1
   # GET /jobs/1.json
   def show
   end
-
+  
   # GET /jobs/new
   def new
     @job = Job.new
@@ -71,4 +90,5 @@ class JobsController < ApplicationController
     def job_params
       params.require(:job).permit(:user_id, :title, :company, :company_url, :description, :location)
     end
+
 end

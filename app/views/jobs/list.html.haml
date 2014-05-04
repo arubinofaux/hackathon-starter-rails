@@ -1,0 +1,62 @@
+.row
+  %h2.col-xs-12.col-sm-4.text-center.text-left-sm
+    %i.glyphicon.glyphicon-thumbs-up.page-header-icon
+    %span.job_list_title
+      &nbsp;&nbsp;Job opportunities
+
+.no-grid-gutter-h.grid-gutter-margin-b.no-margin-t
+
+.row
+  .col-xs-12.col-sm-12
+  %form.form-inline{:role=>'form'}
+    .form-group
+      %label.sr-only
+        Keywords
+      %input.form-control{:id=>"keywords", :type=>"text", :placeholder=>"Keywords"}
+    .form-group
+      %label.sr-only
+        Location
+      %input.form-control{:id=>"location", :type=>"text", :placeholder=>"Location"}
+    %button.btn.btn-primary{:type=>'submit'} Search
+
+/
+  .row
+  .col-xs-12.col-sm-12
+    %form.pull-left.col-xs-12.col-sm-3.form-inline
+      .input-group.no-margin
+        %span.input-group-addon{:style=> 'border:none;background:#fff;background:rgba(0,0,0,.05);'}
+          %i.glyphicon.glyphicon-search
+        %input.form-control.no-padding-hr{:type=> 'text', :style=> 'border:none;background:#fff;background:rgba(0,0,0,.05);', :placeholder=> 'Location' }
+    .visible-xs.clearfix.form-group-margin
+    .pull-left
+      %a.btn.btn-primary.btn-labeled{:href => '#'}
+        %span.btn-label.icon.fa.fa-plus
+        Search
+    %form.pull-left.col-xs-12.col-sm-3.form-inline
+      .input-group.no-margin
+        %span.input-group-addon{:style=> 'border:none;background:#fff;background:rgba(0,0,0,.05);'}
+          %i.glyphicon.glyphicon-search
+        %input.form-control.no-padding-hr{:type=> 'text', :style=> 'border:none;background:#fff;background:rgba(0,0,0,.05);', :placeholder=> 'Keyword' }
+    .visible-xs.clearfix.form-group-margin
+    .pull-left
+      %a.btn.btn-primary.btn-labeled{:href => '#'}
+        %span.btn-label.icon.fa.fa-plus
+        Search
+    
+.no-grid-gutter-h.grid-gutter-margin-b.no-margin-t
+    
+.row
+  .col-md-12
+    %table.table
+      
+      - @jobs.each do |job|
+        %tr
+          %td
+            %h4.job_list_company
+              %a{:href => '#'}= job.company
+          %td
+            %h4
+              %a.job_title{:href => '#'}= job.title          
+          %td= job.location
+
+%br

@@ -21,27 +21,31 @@
   ================================================== -->
   <%= javascript_include_tag "backend" %>
 
-  <script type="text/javascript">
-		init.push(function () {
-			$('#profile-tabs').tabdrop();
+  <%= javascript_include_tag "//maps.google.com/maps/api/js?sensor=false" %>
+  <%= javascript_include_tag "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js" %>
 
-			$("#leave-comment-form").expandingInput({
-				target: 'textarea',
-				hidden_content: '> div',
-				placeholder: 'Write message',
-				onAfterExpand: function () {
-					$('#leave-comment-form textarea').attr('rows', '3').autosize();
-				}
-			});
-		})
-		window.PixelAdmin.start(init);
-	</script>
+
+ <script type="text/javascript">
+	init.push(function () {
+		// Javascript code here
+	})
+	window.PixelAdmin.start(init);
+</script>
 
 
   <%= csrf_meta_tags %>
 
 </head>
 
-	<%= yield %>
-
+<body class="theme-default main-menu-animated <% if(params[:action] == 'pubprofile' || params[:action] == 'profile') %>page-profile<% end %>">
+  <div id="main-wrapper">
+      <%= render :partial => "shared/main_navigation" %>
+      <%= render :partial => "shared/main_menu" %>
+	      <div id="content-wrapper">  
+          <%= yield %>
+        </div>
+        <div id="main-menu-bg"></div>
+     </div>
+  
+  </body>      
 </html>
