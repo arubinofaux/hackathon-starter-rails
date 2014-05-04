@@ -10,6 +10,10 @@ end
 
 gem 'mysql2'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 # Users
 gem 'devise'
 gem 'omniauth'
@@ -42,6 +46,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+gem 'therubyracer'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
