@@ -39,8 +39,10 @@
 
 <body class="theme-default main-menu-animated <% if(params[:action] == 'pubprofile' || params[:action] == 'profile') %>page-profile<% end %>">
   <div id="main-wrapper">
+    <% if user_signed_in? %>
       <%= render :partial => "shared/main_navigation" %>
       <%= render :partial => "shared/main_menu" %>
+    <% end %>
 	      <div id="content-wrapper">  
           <%= yield %>
         </div>

@@ -84,9 +84,15 @@
 							<% @users.each do |user| %>
               <tr>
                 <td><%= user.id %></td>
-                <td><img src="<%= user.avatar %>" class="avatar" /></td>
+                <td>
+                  <%= link_to user_pubprofile_path(user.id) do %>
+                    <img src="<%= user.avatar %>" class="avatar" />
+                  <% end %>
+                </td>
 								<td>	
-                  <a href="#"><%= user.name %></a>
+                  <%= link_to user_pubprofile_path(user.id) do %>
+                    <%= user.name %>
+                  <% end %>
 								</td>
                 <td><a href="#"><%= user.email %></a></td>
 							</tr>

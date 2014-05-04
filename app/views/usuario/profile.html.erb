@@ -13,8 +13,10 @@
 			<div class="left-col">
 				<div class="profile-block">
 					<div class="panel profile-photo">
-						<img src="<%= current_user.avatar %>?type=large" alt="">
-					</div><br>
+						<%= link_to "https://github.com/#{current_user.github_username}", :target => '_blank' do %>
+              <img src="<%= current_user.avatar %>?type=large" alt="">
+					  <% end %>
+          </div><br>
 					<!--<a href="#" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Following</a>&nbsp;&nbsp;
 					<a href="#" class="btn"><i class="fa fa-comment"></i></a>-->
 				</div>
