@@ -1,17 +1,134 @@
-<h2>Sign in</h2>
+<body class="theme-default page-signin">
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+	<!-- Page background -->
+	<div id="page-signin-bg">
+		<!-- Background overlay -->
+		<div class="overlay"></div>
+		<!-- Replace this with your bg image -->
+		<img src="assets/demo/signin-bg-1.jpg" alt="">
+	</div>
+	<!-- / Page background -->
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+	<!-- Container -->
+	<div class="signin-container">
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+		<!-- Left side -->
+		<div class="signin-info">
+			<a href="index.html" class="logo">
+				PixelAdmin
+			</a> <!-- / .logo -->
+			<div class="slogan">
+				Simple. Flexible. Powerful.
+			</div> <!-- / .slogan -->
+			<ul>
+				<li><i class="fa fa-sitemap signin-icon"></i> Flexible modular structure</li>
+				<li><i class="fa fa-file-text-o signin-icon"></i> LESS &amp; SCSS source files</li>
+				<li><i class="fa fa-outdent signin-icon"></i> RTL direction support</li>
+				<li><i class="fa fa-heart signin-icon"></i> Crafted with love</li>
+			</ul> <!-- / Info list -->
+		</div>
+		<!-- / Left side -->
 
-<%= render "devise/shared/links" %>
+		<!-- Right side -->
+		<div class="signin-form">
+
+			<!-- Form -->
+			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+				<div class="signin-text">
+					<span>Sign In to your account</span>
+				</div> <!-- / .signin-text -->
+
+				<div class="form-group w-icon">
+					<%= f.email_field :email, :autofocus => true, :class => "form-control input-lg", :placeholder => "Email" %>
+					<span class="fa fa-user signin-form-icon"></span>
+				</div> <!-- / Username -->
+
+				<div class="form-group w-icon">
+					<%= f.password_field :password, :class => "form-control input-lg", :placeholder => "Password" %>
+					<span class="fa fa-lock signin-form-icon"></span>
+				</div> <!-- / Password -->
+
+				<div class="form-actions">
+					<%= f.submit "SIGN IN", :class => "signin-btn bg-primary" %>
+					<%= link_to "Forgot your password?", new_password_path(resource_name), :class => "forgot-password" %>
+				</div> <!-- / .form-actions -->
+
+			<% end %>
+			<!-- / Form -->
+
+			<!-- "Sign In with" block -->
+			<div class="signin-with">
+				<!-- Facebook -->
+				<%= link_to raw('Sign in with <span>Facebook</span>'), user_omniauth_authorize_path(:facebook), :class => "signin-with-btn", :style => "background:#4f6faa;background:rgba(79, 111, 170, .8);" %>
+			</div>
+			<!-- / "Sign In with" block -->
+
+			<!-- Password reset form -->
+			<div class="password-reset-form" id="password-reset-form">
+				<div class="header">
+					<div class="signin-text">
+						<span>Password reset</span>
+						<div class="close">&times;</div>
+					</div> <!-- / .signin-text -->
+				</div> <!-- / .header -->
+				
+				<!-- Form -->
+				<form action="index.html" id="password-reset-form_id">
+					<div class="form-group w-icon">
+						<input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="Enter your email">
+						<span class="fa fa-envelope signin-form-icon"></span>
+					</div> <!-- / Email -->
+
+					<div class="form-actions">
+						<input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
+					</div> <!-- / .form-actions -->
+				</form>
+				<!-- / Form -->
+			</div>
+			<!-- / Password reset form -->
+		</div>
+		<!-- Right side -->
+	</div>
+	<!-- / Container -->
+
+	<div class="not-a-member">
+		Not a member? <%= link_to "Sign up now", new_user_registration_path %>
+	</div>
+
+
+<script type="text/javascript">
+	// Resize BG
+	init.push(function () {
+		var $ph  = $('#page-signin-bg'),
+		    $img = $ph.find('> img');
+
+		$(window).on('resize', function () {
+			$img.attr('style', '');
+			if ($img.height() < $ph.height()) {
+				$img.css({
+					height: '100%',
+					width: 'auto'
+				});
+			}
+		});
+	});
+
+	// Show/Hide password reset form on click
+	init.push(function () {
+		$('#forgot-password-link').click(function () {
+			$('#password-reset-form').fadeIn(400);
+			return false;
+		});
+		$('#password-reset-form .close').click(function () {
+			$('#password-reset-form').fadeOut(400);
+			return false;
+		});
+	});
+
+	window.PixelAdmin.start(init);
+</script>
+
+</body>
+

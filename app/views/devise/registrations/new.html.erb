@@ -1,0 +1,113 @@
+<body class="theme-default page-signup">
+
+
+
+  <!-- Page background -->
+  <div id="page-signup-bg">
+    <!-- Background overlay -->
+    <div class="overlay"></div>
+    <!-- Replace this with your bg image -->
+    <%= image_tag 'signin-bg-1.jpg' %>
+  </div>
+  <!-- / Page background -->
+
+  <!-- Container -->
+  <div class="signup-container">
+    <!-- Header -->
+    <div class="signup-header">
+      <a href="index.html" class="logo">
+        Talento Tecnico
+      </a> <!-- / .logo -->
+      <div class="slogan" style="display: none;">
+        Simple. Flexible. Powerful.
+      </div> <!-- / .slogan -->
+    </div>
+    <!-- / Header -->
+
+    <!-- Form -->
+    <div class="signup-form">
+      <form action="index.html" id="signup-form_id">
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+        
+        <div class="signup-text">
+          <span>Create an account</span>
+        </div>
+
+        <div>
+          <%= devise_error_messages! %>
+        </div>
+
+        <div class="form-group w-icon">
+          <%= f.text_field :name, :class => "form-control input-lg", :placeholder => "Full Name" %>
+          <span class="fa fa-info signup-form-icon"></span>
+        </div>
+
+        <div class="form-group w-icon">
+          <%= f.email_field :email, :class => "form-control input-lg", :placeholder => "E-mail" %>
+          <span class="fa fa-envelope signup-form-icon"></span>
+        </div>
+
+        <div class="form-group w-icon">
+          <%= f.password_field :password, :class => "form-control input-lg", :placeholder => "Password" %>
+          <span class="fa fa-lock signup-form-icon"></span>
+        </div>
+
+        <div class="form-group w-icon">
+        <%= f.password_field :password_confirmation, :class => "form-control input-lg", :placeholder => "Confirm Password" %>
+          <span class="fa fa-lock signup-form-icon"></span>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px;margin-bottom: 20px;">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="signup_confirm" class="px" id="confirm_id">
+            <span class="lbl">I agree with the <a href="#" target="_blank">Terms and Conditions</a></span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "SIGN UP", :class => "signup-btn bg-primary" %>
+        </div>
+      <% end %>
+      <!-- / Form -->
+
+      <!-- "Sign In with" block -->
+      <div class="signup-with">
+        <!-- Facebook -->
+        <%= link_to raw('Sign Up with <span>Facebook</span>'), user_omniauth_authorize_path(:facebook), :class => "signup-with-btn", :style => "background:#4f6faa;background:rgba(79, 111, 170, .8);" %>
+      </div>
+      <!-- / "Sign In with" block -->
+    </div>
+    <!-- Right side -->
+  </div>
+
+    <div class="have-account">
+    Already have an account? <%= link_to "Sign In", new_user_session_path %>
+  </div>
+
+
+
+<script type="text/javascript">
+  // Resize BG
+  init.push(function () {
+    var $ph  = $('#page-signup-bg'),
+        $img = $ph.find('> img');
+
+    $(window).on('resize', function () {
+      $img.attr('style', '');
+      if ($img.height() < $ph.height()) {
+        $img.css({
+          height: '100%',
+          width: 'auto'
+        });
+      }
+    });
+    
+  });
+
+  window.PixelAdmin.start(init);
+</script>
+
+</body>
+
+
+
