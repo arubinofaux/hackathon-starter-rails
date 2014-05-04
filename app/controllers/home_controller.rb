@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   layout "user_backend"
 
   def index
-    
+    redirect_to new_user_session_path
   end
 
   def dev
